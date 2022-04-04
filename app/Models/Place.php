@@ -13,4 +13,6 @@ class Place extends Model implements HasMedia
     use InteractsWithMedia;
 
     protected $guarded = [];
+
+
 }

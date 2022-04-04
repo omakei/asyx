@@ -38,7 +38,7 @@ class PlaceControllerTest extends TestCase
 
         $this->actingAs($user);
 
-        Place::factory(2)->create();
+        Place::factory(10)->create();
 
         Place::factory()->create(['name' => 'omakei']);
 
@@ -71,7 +71,7 @@ class PlaceControllerTest extends TestCase
         $this->assertNotNull($response->json('links'));
     }
 
-    public function test_can_edit_place()
+    public function test_can_update_place()
     {
         $user = User::factory()->create(['email' => 'omakei96@gmail.com']);
 

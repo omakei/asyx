@@ -48,7 +48,10 @@ class UserFormRequest extends FormRequest
     protected function passedValidation()
     {
 
-        $this->password = Hash::make($this->password);
+        $this->merge([
+            'password' => Hash::make($this->password),
+            'email_verified_at' => now(),
+        ]);
 
     }
 }

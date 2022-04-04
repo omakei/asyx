@@ -9,6 +9,7 @@ class PlaceResource extends JsonResource
 
     public function toArray($request)
     {
+
         return [
             'type' => 'places',
             'id' => $this->id,
@@ -17,12 +18,12 @@ class PlaceResource extends JsonResource
                 'slug' => $this->slug,
                 'city' => $this->city,
                 'state' => $this->state,
-                'image' => 'url-photo',
+                'image' => isset($this->getMedia('image')[0])?$this->getMedia('image')[0]->getFullUrl():null,
                 'created_at' => $this->created_at,
                 'updated_at' => $this->updated_at,
             ],
            'links' => [
-               'self' => env('APP_URL').'/api/places/'. $this->slug
+               'self' => env('APP_URL').'/api/places/'. $this->id
            ],
         ];
     }

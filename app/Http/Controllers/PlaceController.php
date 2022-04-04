@@ -7,6 +7,7 @@ use App\Http\Resources\PlaceCollection;
 use App\Http\Resources\PlaceResource;
 use App\Models\Place;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -21,7 +22,7 @@ class PlaceController extends Controller
     public function index()
     {
         $places = QueryBuilder::for(Place::class)
-                    ->allowedFilters(['name'])
+                    ->allowedFilters([AllowedFilter::exact('name')])
                     ->paginate();
 
         return new PlaceCollection($places);
@@ -50,6 +51,7 @@ class PlaceController extends Controller
 
     public function update(PlaceFormRequest $request, Place $place)
     {
+
         $place->update($request->only(['name','slug','city','state']));
 
         $place->clearMediaCollection('image');

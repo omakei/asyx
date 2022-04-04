@@ -13,6 +13,7 @@ class AuthController extends Controller
 {
     public function register(UserFormRequest $request)
     {
+
         $user = User::create($request->only(['name','email','password','email_verified_at']));
 
         return response()
@@ -26,21 +27,23 @@ class AuthController extends Controller
     {
         $user = User::where('email', $request->email)->first();
 
-        if(!Hash::check($request->password,$user->password)) {
+        if(!Hash::check($request->password, $user->password)) {
 
             return response()
                 ->json(
-                    UserResource::make($user),
+                    null,
                     Response::HTTP_UNAUTHORIZED
                 );
         }
 
-        $user->createToken('api-token',[
+       $token = $user->createToken('api-token',[
             'place:read',
             'place:create',
             'place:update',
             'place:delete',
         ])->plainTextToken;
+
+        $user->token = $token;
 
         return response()
             ->json(
